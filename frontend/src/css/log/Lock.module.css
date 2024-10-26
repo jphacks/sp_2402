@@ -1,5 +1,11 @@
-.LockContainer{
-    width: calc((100vw - 26px - 16px)/3);
-    height: calc(((100vw - 26px - 16px) / 3 + 4px) * (163 / 116));
-  }
-  
+/* Lock.module.css */
+
+.LockContainer {
+  width: 110px;
+  height: 116px;
+}
+
+.image {
+  width: 110px;
+  height: 116px;
+}

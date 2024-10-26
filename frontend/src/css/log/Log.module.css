@@ -1,13 +1,17 @@
 /* Log.module.css */
+
 .container {
+  position: relative;
   width: 100%;
-  height: 100vh;
-  background-image: url('/log/log_background.svg'); /* 背景画像のパスを指定 */
+  min-height: 100vh;
+  background-image: url('/log/log_background.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+.viewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
