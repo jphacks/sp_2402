@@ -5,6 +5,8 @@ import homes from "../../css/home/home.module.css";
 import Message from "./Message";
 import { dummyUser, tea_1Story} from "../../data/storyData";
 import FinishPopup from "./FinishPopup";
+import ViewCoffee from "../utils/ViewCoffee";
+import ViewTea_1 from "../utils/ViewTea_1";
 
 const Scenario = () => {
   const navigate = useNavigate();
@@ -16,7 +18,23 @@ const Scenario = () => {
   const story = dummyUser.characters[location.state.character].scenario[index];
   const title = story.title;
   const dialogues = story.dialogues;
+  const enviroment = story.enviroment;
   
+
+  let characterComponent;
+
+  switch (location.state.character) {
+    case "tea_1":
+      // characterComponent = <ViewTea_1 enviroment="park" />;
+      characterComponent = <ViewTea_1 enviroment={enviroment} />;
+      break;
+    case "coffee":
+      characterComponent = <ViewCoffee enviroment={enviroment} />;
+      break;
+    default:
+      characterComponent = <div>キャラクターが選択されていません。</div>;
+      break;
+  }
 
   const next = () => {
     if (messageIndex != dialogues.length)
@@ -41,7 +59,7 @@ const Scenario = () => {
         />
       )}
       <div className={homes.container}>
-        <img src="/dev/summon.png" alt="" />
+        {characterComponent}
         <Header index={index+1} title={title} />
         <Message
           next={next}

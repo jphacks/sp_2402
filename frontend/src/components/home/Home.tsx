@@ -14,11 +14,10 @@ const Home = () => {
 
   switch (dummyUser.selectedCharacter) {
     case "tea_1":
-      // characterComponent = <ViewTea_1 enviroment="park" />;
-      characterComponent = <ViewCoffee enviroment="night" />;
+      characterComponent = <ViewTea_1 enviroment="park" />;
       break;
     case "coffee":
-      characterComponent = <ViewCoffee enviroment="night" />;
+      characterComponent = <ViewCoffee enviroment="apartment" />;
       break;
     default:
       characterComponent = <div>キャラクターが選択されていません。</div>;
