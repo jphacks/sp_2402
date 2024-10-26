@@ -86,8 +86,22 @@ const Camera = () => {
               <img src="/utils/Icon/back.svg" alt="戻る" />
             </div>
           </div>
-          <img src={image} alt="Captured" width={200} />
-          <button onClick={sendImageToAPI}>Send to API</button>
+          <div className={cameras.content}>
+            <img src={image} alt="撮影写真" />
+            <div className={cameras.messageWrapper}>
+              <div>
+                <img src="/utils/Icon/check.svg" alt="チェック" />
+                <p>ラベルはペットボトルからはがしてあるかな？</p>
+              </div>
+              <div>
+                <img src="/utils/Icon/check.svg" alt="チェック" />
+                <p>
+                  ラベリィを召喚したあとはラベルとキャップを分別してからペットボトルを捨てよう…！
+                </p>
+              </div>
+            </div>
+          </div>
+          <img src="/camera/Camera/summonButton.svg" alt="召喚する"  onClick={sendImageToAPI} className={cameras.summonButton}/>
         </>
       ) : (
         <>

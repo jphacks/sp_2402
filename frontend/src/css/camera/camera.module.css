@@ -16,6 +16,8 @@
 
 .camera {
   width: 100%;
+  height: calc(100vw * (474 / 390));
+  background: #333;
 }
 
 .message {
@@ -36,4 +38,44 @@
 .button {
   display: block;
   margin: 28px auto 60px;
+}
+
+.content {
+  height: 544px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: linear-gradient(180deg, #DC5DCB, #748DED);
+}
+
+.content > img {
+  display: block;
+  width: 300px;
+  border-radius: 40px;
+  margin: 48px 0px 24px;
+  border: 2px solid #fff;
+}
+
+.messageWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messageWrapper > div {
+  width: 310px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.messageWrapper > div p {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.summonButton {
+  display: block;
+  margin: 40px auto 72px;
 }
