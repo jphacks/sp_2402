@@ -11,8 +11,11 @@
 ラベルを剥がし、その写真を撮ることによって物語が進む
 ### 特長
 #### 1. 特長1
+写真を撮ること
 #### 2. 特長2
+３Dモデルを使用していること。
 #### 3. 特長3
+
 
 ### 解決出来ること
 税金の削減、SDGzへの関心の高まり
@@ -23,7 +26,7 @@
 * 
 
 ## 開発技術
-Python,fastAPI,React,Vite,TypeScript,CSS,Docker
+Python,fastAPI,Blender,React,Vite,TypeScript,CSS,Docker
 ### 活用した技術
 ChatGPT
 #### API・データ
