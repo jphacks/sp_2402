@@ -88,7 +88,7 @@ const Camera = () => {
     //   console.error("エラー:", error);
     //   setResult("エラーが発生しました。");
     // }
-    const separated = false;
+    const separated = true;
     if (!separated) {
       setError(true);
     } else {

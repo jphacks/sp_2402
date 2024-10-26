@@ -4,6 +4,7 @@ import Camera from "./components/camera/Camera";
 import Home from "./components/home/Home";
 import Labely from "./components/labely/Labely";
 import Log from "./components/log/Log";
+import Scenario from "./components/scenario/Scenario";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Route path="/labely" element={<Labely />} />
         <Route path="/log" element={<Log />} />
         <Route path="/camera" element={<Camera />} />
+        <Route path="/scenario" element={<Scenario />} />
       </Routes>
     </BrowserRouter>
   );
