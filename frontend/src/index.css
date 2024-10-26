@@ -71,3 +71,7 @@ html, body {
   height: 100%;
   font-family: "Inter", "Noto Sans JP", sans-serif;
 }
+
+p {
+  color: #222547;
+}

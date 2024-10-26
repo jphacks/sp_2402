@@ -2,13 +2,26 @@ import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import cameras from "../../css/camera/camera.module.css";
 import { useNavigate } from "react-router-dom";
+import Popup from "./Popup";
+
+interface ScenarioState {
+  character: string;
+  index: number;
+  environment: string;
+}
 
 const Camera = () => {
   const webcamRef = useRef<Webcam>(null);
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
+
+  const closePopup = () => {
+    setError(false);
+    setImage(null);
+  };
 
   // 画像をキャプチャする関数
   const capture = () => {
@@ -45,7 +58,7 @@ const Camera = () => {
     if (!image) return;
 
     const compressedImage = await compressImage(image, 0.7); // 圧縮率を指定
-    console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
+    // console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
 
     // try {
     //   const response = await fetch("http://localhost:8000/process_image", {
@@ -75,6 +88,18 @@ const Camera = () => {
     //   console.error("エラー:", error);
     //   setResult("エラーが発生しました。");
     // }
+    const separated = false;
+    if (!separated) {
+      setError(true);
+    } else {
+      const scenarioState: ScenarioState = {
+        character: "dog",
+        index: 1,
+        environment: "summon",
+      };
+
+      navigate("/scenario", { state: scenarioState });
+    }
   };
 
   return (
@@ -101,7 +126,12 @@ const Camera = () => {
               </div>
             </div>
           </div>
-          <img src="/camera/Camera/summonButton.svg" alt="召喚する"  onClick={sendImageToAPI} className={cameras.summonButton}/>
+          <img
+            src="/camera/Camera/summonButton.svg"
+            alt="召喚する"
+            onClick={sendImageToAPI}
+            className={cameras.summonButton}
+          />
         </>
       ) : (
         <>
@@ -132,6 +162,7 @@ const Camera = () => {
           />
         </>
       )}
+      {error && <Popup closePopup={closePopup} />}
       {result && <p>{result}</p>}
     </>
   );
