@@ -6,7 +6,7 @@
     align-items: center;
     width: 116px; /* 枠の幅 */
     height: 152px; /* 枠の高さ */
-    border-radius: 15px; /* 角丸の四角 */
+    border-radius: 32px; /* 角丸の四角 */
     background-color: #f0f0f0; /* 枠の背景色 */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* 影を追加 */
     overflow: visible; /* 枠外の要素を表示する */
@@ -19,7 +19,7 @@
     width: 100%; /* 枠のサイズに合わせる */
     height: 100%;
     object-fit: cover; /* 枠に収めて必要な部分を切り取る */
-    border-radius: 15px; /* 枠と同じ角丸に設定 */
+    border-radius: 32px; /* 枠と同じ角丸に設定 */
 }
 
 .CharacterCardIcon {
@@ -60,3 +60,4 @@
     align-items: center;
     z-index: 4; /* 他の要素より前面に表示 */
 }
+
