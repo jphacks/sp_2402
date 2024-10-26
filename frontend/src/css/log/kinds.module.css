@@ -1,0 +1,31 @@
+/* Kinds.module.css */
+.container {
+    position: relative; /* 画像を個別に配置するために relative を指定 */
+    width: 100%;
+    height: 100vh; /* 必要に応じて全体の高さを調整 */
+  }
+  
+  .image1 {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    width: 80px; /* 画像1の幅 */
+    height: auto;
+  }
+  
+  .image2 {
+    position: absolute;
+    top: 150px;
+    right: 50px;
+    width: 100px; /* 画像2の幅 */
+    height: auto;
+  }
+  
+  .image3 {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px; /* 画像3の幅 */
+    height: auto;
+  }
