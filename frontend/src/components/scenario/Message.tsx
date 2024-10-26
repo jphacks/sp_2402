@@ -3,13 +3,14 @@ import messages from "../../css/scenario/message.module.css";
 
 // Propsの型定義
 interface MessageProps {
+  next: () => void;
   name: string;
   message: string;
 }
 
-const Message: React.FC<MessageProps> = ({ name, message }) => {
+const Message: React.FC<MessageProps> = ({ next, name, message }) => {
   return (
-    <div className={messages.wrapper}>
+    <div className={messages.wrapper}  onClick={() => next()}>
       <div className={messages.container}>
         <div>{name}</div>
         <p>{message}</p>

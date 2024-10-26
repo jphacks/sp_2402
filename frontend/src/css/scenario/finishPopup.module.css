@@ -1,0 +1,81 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text{
+  margin-top: 240px;
+  width: 80vw;
+}
+
+.icon {
+  margin-top: -56px;
+}
+
+.box {
+  width: 320px;
+  height: 80px;
+  background-image: linear-gradient(90deg, #DC5DCB, #3148A7);;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  padding: 0px 20px;
+}
+
+.box p {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.box div {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.box h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.check {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+}
+
+.next {
+  position: fixed;
+  right: 22px;
+  bottom: 84px;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px); /* 上方向に移動 */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
