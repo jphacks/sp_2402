@@ -1,0 +1,39 @@
+.header {
+  height: 14vh;
+  position: relative;
+}
+
+.backButton {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 13px;
+  bottom: 8px;
+}
+
+.camera {
+  width: 100%;
+}
+
+.message {
+  margin-top: -5px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(180deg, #DC5DCB, #748DED);
+}
+
+.message p {
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.button {
+  display: block;
+  margin: 28px auto 60px;
+}

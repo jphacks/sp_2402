@@ -1,10 +1,14 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import cameras from "../../css/camera/camera.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Camera = () => {
   const webcamRef = useRef<Webcam>(null);
   const [image, setImage] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   // 画像をキャプチャする関数
   const capture = () => {
@@ -43,53 +47,75 @@ const Camera = () => {
     const compressedImage = await compressImage(image, 0.7); // 圧縮率を指定
     console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
 
-    try {
-      const response = await fetch("http://localhost:8000/process_image", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
-      });
+    // try {
+    //   const response = await fetch("http://localhost:8000/process_image", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
+    //   });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+    //   if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
 
-      const data = await response.json();
-      console.log(data);
-      if (data.separated) {
-        setResult(
-          `ラベルが分離されています。ジャンル: ${
-            data.genre
-          }、イメージカラー: ${data.colors.join(", ")}`
-        );
-      } else {
-        setResult("ラベルが分離されていません。");
-      }
-    } catch (error) {
-      console.error("エラー:", error);
-      setResult("エラーが発生しました。");
-    }
+    //   const data = await response.json();
+    //   console.log(data);
+    //   if (data.separated) {
+    //     setResult(
+    //       `ラベルが分離されています。ジャンル: ${
+    //         data.genre
+    //       }、イメージカラー: ${data.colors.join(", ")}`
+    //     );
+    //   } else {
+    //     setResult("ラベルが分離されていません。");
+    //   }
+    // } catch (error) {
+    //   console.error("エラー:", error);
+    //   setResult("エラーが発生しました。");
+    // }
   };
 
   return (
     <>
-      <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        videoConstraints={{
-          width: 390,
-          height: 474,
-          facingMode: "user",
-        }}
-      />
-      <button onClick={capture}>Capture Photo</button>
-      {image && (
+      {image ? (
         <>
+          <div className={cameras.header}>
+            <div className={cameras.backButton} onClick={() => setImage(null)}>
+              <img src="/utils/Icon/back.svg" alt="戻る" />
+            </div>
+          </div>
           <img src={image} alt="Captured" width={200} />
           <button onClick={sendImageToAPI}>Send to API</button>
+        </>
+      ) : (
+        <>
+          <div className={cameras.header}>
+            <div className={cameras.backButton} onClick={() => navigate("/")}>
+              <img src="/utils/Icon/back.svg" alt="戻る" />
+            </div>
+          </div>
+          <Webcam
+            className={cameras.camera}
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            videoConstraints={{
+              width: 390,
+              height: 474,
+              facingMode: "user",
+            }}
+          />
+          <div className={cameras.message}>
+            <p>ラベルをペットボトルからはがして、写真を撮ろう！</p>
+          </div>
+          <img
+            className={cameras.button}
+            src="/camera/Camera/cameraButton.svg"
+            alt="撮影"
+            onClick={capture}
+          />
         </>
       )}
       {result && <p>{result}</p>}
