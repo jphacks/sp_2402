@@ -6,17 +6,13 @@ import homes from "../../css/home/home.module.css";
 import SummonButton from "./SummonButton";
 import Intimacy from "./Intimacy";
 import Plasticbottles from "./PlasticBottle";
+import { dummyUser } from "../../data/storyData";
 
 const Home = () => {
-  const dummydata = {
-    name: "お茶わんこ",
-    intimacyLevel: 100,
-    number : 2
-  }
   return (
     <>
-    <Intimacy name = {dummydata.name} intimacyLevel={dummydata.intimacyLevel} />
-    <Plasticbottles number = {dummydata.number}/>
+    <Intimacy name = {dummyUser.characters[dummyUser.selectedCharacter].name} intimacyLevel={dummyUser.characters[dummyUser.selectedCharacter].intimacyLevel} />
+    <Plasticbottles number = {dummyUser.bottoleSum}/>
      <div className={homes.container}>
       <img src="/dev/home.png" alt="" />
       {/* <HomeBackground /> */}

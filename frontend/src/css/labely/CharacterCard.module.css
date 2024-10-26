@@ -1,17 +1,17 @@
 .CharacterCardContainer {
-    top: 192px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 116px; /* 枠の幅 */
-    height: 152px; /* 枠の高さ */
+    width: calc((100vw - 26px - 16px) / 3 + 4px);
+    height: calc(((100vw - 26px - 16px) / 3 + 4px) * (152 / 116));
     border-radius: 32px; /* 角丸の四角 */
     background-color: #f0f0f0; /* 枠の背景色 */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* 影を追加 */
     overflow: visible; /* 枠外の要素を表示する */
     border: 2px solid #fff; /* 枠線を追加 */
-    left : 13px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
 }
 
 .backgroundIcon {
@@ -24,17 +24,17 @@
 
 .CharacterCardIcon {
     position: absolute; /* 背景画像の上に配置 */
-    top: 10px; /* 上部から10px下に配置 */
-    right: 10px; /* 右部から10px左に配置 */
-    width: 32px; /* アイコンのサイズ */
+    top: 12px; /* 上部から10px下に配置 */
+    right: 6px; /* 右部から10px左に配置 */
+    width: 40px; /* アイコンのサイズ */
     height: auto;
     z-index: 2; /* 背景画像の前面に表示 */
 }
 
 .overlayButton {
     position: absolute;
-    top: 140px; /* カードの上から139pxに配置 */
-    left: 18px; /* 横から18pxに配置 */
+    bottom: 0;
+    transform: translateY(50%);
     width: 80px; /* ボタンの幅 */
     height: 24px; /* ボタンの高さ */
     border-radius: 10px; /* 角を丸くする */
