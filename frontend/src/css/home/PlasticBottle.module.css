@@ -1,0 +1,24 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding-bottom: 7px;
+    width: 120px; /* ボタンの幅 */
+    height: 32px; /* ボタンの高さ */
+    border-radius: 100px; /* 四角いボタンの角を丸くする */
+    background-color: rgba(0, 0, 0, 0.4); /* ボタンの背景色を黒に設定 */
+    position: fixed;
+    top: 81px;
+    right: 25px;
+    z-index: 2;
+}
+
+.button img {
+    margin-right: 36px; /* 数字と画像の間にスペースを作成 */
+}
+
+.button p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff; /* テキストの色を白に設定 */
+}
