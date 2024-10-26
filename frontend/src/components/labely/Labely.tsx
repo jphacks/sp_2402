@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "../utils/Navbar";
-// import LabelBackground from './LabelBackground'
 import homes from "../../css/home/home.module.css";
 import CharacterCard from "./CharacterCard";
 import Header from "./Header";
 import Lock from "./Lock";
 import { characters } from "../../data/storyData";
 import styles from "../../css/labely/Labely.module.css";
+import LabelBackground from "./LabelyBackground";
 
 const Labely = () => {
   const dummydata = {
@@ -38,8 +38,7 @@ const Labely = () => {
           );
         })}
       </div>
-      <img src="/dev/labely.png" alt="" />
-      {/* <LabelBackground /> */}
+      <LabelBackground />
       <Navbar currentPage="labely" />
     </div>
   );
