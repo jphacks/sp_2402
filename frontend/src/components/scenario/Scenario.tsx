@@ -3,18 +3,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import homes from "../../css/home/home.module.css";
 import Message from "./Message";
-import { dummyStory } from "../../data/storyData";
+import { dummyUser, tea_1Story} from "../../data/storyData";
 import FinishPopup from "./FinishPopup";
 
 const Scenario = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [messageIndex, setMessageIndex] = useState(1);
-  const [name, setName] = useState("");
   const [isFinished, setIsFinished] = useState(false);
+  const intimacyLevel = dummyUser.characters[location.state.character].intimacyLevel;
+  const index =  intimacyLevel / 20;
+  const story = dummyUser.characters[location.state.character].scenario[index];
+  const title = story.title;
+  const dialogues = story.dialogues;
+  
 
   const next = () => {
-    if (messageIndex != dummyStory[location.state.index - 1].dialogues.length)
+    if (messageIndex != dialogues.length)
       setMessageIndex(messageIndex + 1);
     else setIsFinished(true);
   };
@@ -26,37 +31,23 @@ const Scenario = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (
-      dummyStory[location.state.index - 1].dialogues[messageIndex - 1]
-        .speaker == "主人公"
-    ) {
-      setName("あなた");
-    } else if (
-      dummyStory[location.state.index - 1].dialogues[messageIndex - 1]
-        .speaker == "キャラ"
-    ) {
-      setName("茶々");
-    }
-  }, [messageIndex]);
-
   return (
     <>
       {isFinished && (
         <FinishPopup
-          index={location.state.index}
-          title={dummyStory[location.state.index - 1].title}
-          intimacyLevel={20}
+          index={index+1}
+          title={title}
+          intimacyLevel={intimacyLevel+20}
         />
       )}
       <div className={homes.container}>
         <img src="/dev/summon.png" alt="" />
-        <Header index={location.state.index} title={"初めての出会い"} />
+        <Header index={index+1} title={title} />
         <Message
           next={next}
-          name={name}
+          name={dialogues[messageIndex - 1].speaker}
           message={
-            dummyStory[location.state.index - 1].dialogues[messageIndex - 1]
+            dialogues[messageIndex - 1]
               .text
           }
         />

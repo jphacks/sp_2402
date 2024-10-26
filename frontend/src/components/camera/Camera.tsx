@@ -6,8 +6,6 @@ import Popup from "./Popup";
 
 interface ScenarioState {
   character: string;
-  index: number;
-  environment: string;
 }
 
 const Camera = () => {
@@ -93,9 +91,7 @@ const Camera = () => {
       setError(true);
     } else {
       const scenarioState: ScenarioState = {
-        character: "dog",
-        index: 1,
-        environment: "summon",
+        character: "tea_1",
       };
 
       navigate("/scenario", { state: scenarioState });
