@@ -11,7 +11,7 @@ const Home = () => {
   const dummydata = {
     name: "お茶わんこ",
     intimacyLevel: 100,
-    number : 20
+    number : 2
   }
   return (
     <>
