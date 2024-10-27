@@ -77,14 +77,27 @@ async def process_image(request: ImageRequest):
 
         # ジャンルのリストを取得
         genres = '、'.join(config.DRINK_GENRES)
-        prompt = config.PROMPT_TEMPLATE.format(genres=genres, image=img_str)
+        prompt = config.PROMPT_TEMPLATE.format(genres=genres)
 
         # OpenAIにプロンプトを送信
         response = openai.chat.completions.create(
             model="gpt-4o",  # 使用するモデルを指定
             messages=[
-                {"role": "system", "content": "あなたは画像を解析するAIアシスタントです。"},
-                {"role": "user", "content": prompt}
+                {
+                    "role": "system", "content": "あなたは画像を解析するAIアシスタントです。"
+                },
+                {
+                    "role": "user", "content": [
+                        {"type": "text", "text": prompt},
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url":  f"data:image/jpeg;base64,{img_str}",
+                                "detail": "auto"
+                            }
+                        }
+                    ]
+                }
             ],
             temperature=0.5,
         )

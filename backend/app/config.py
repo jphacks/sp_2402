@@ -17,7 +17,7 @@ DRINK_GENRES = [
 ]
 
 PROMPT_TEMPLATE = """
-これはペットボトルに巻かれたラベル、または剝がされた状態のラベルが含まれる画像です: {image}
+これはペットボトルに巻かれたラベル、または剝がされた状態のラベルが含まれる画像です
 
 これについて、次の3つの情報をJSON形式のみで回答してください。
 - ラベルがペットボトルから剥がされているかいないか
@@ -38,7 +38,3 @@ PROMPT_TEMPLATE = """
   "colors": ["#RRGGBB", "#RRGGBB"]
 }}
 """
-
-def format_prompt(image_data: str):
-    genres_list = "\n".join([f"{i+1}. {genre}" for i, genre in enumerate(DRINK_GENRES)])
-    return PROMPT_TEMPLATE.format(image=image_data, genres=genres_list)
