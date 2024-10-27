@@ -1,12 +1,19 @@
 import React from 'react';
+import TitlesCard from "./TitlesCard";
 import styles from '../../css/log/kinds.module.css';
 
-const Kinds: React.FC = () => {
+interface KindsCardProps {
+  indexImage: string;
+  titleCards: Array<any>;
+}
+
+const Kinds: React.FC<KindsCardProps> = ({ indexImage, titleCards }) => {
   return (
     <div className={styles.container}>
-      <img src="/log/eco.svg" alt="画像1" className={styles.image1} />
-      <img src="/log/story.svg" alt="画像2" className={styles.image2} />
-      <img src="/log/character.svg" alt="画像3" className={styles.image3} />
+      <img src={indexImage} alt="" className={styles.indexImage} />
+      <div className={styles.viewer}>
+        {titleCards.map((data) => <TitlesCard image={data.image} isUnlocked={data.isUnlocked} />)}
+      </div>
     </div>
   );
 };

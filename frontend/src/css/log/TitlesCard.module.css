@@ -1,12 +1,13 @@
 /* TitlesCard.module.css */
 
 .TitlesCardContainer {
-    position: absolute;
-    width: 110px;
-    height: 116px;
-  }
+  width: 110px;
+  height: 116px;
+  margin: 0 auto 10px;
+  padding-bottom: 10px;
+}
   
-  .image {
-    width: 110px;
-    height: 116px;
-  }
+.image {
+  width: 110px;
+  height: 116px;
+}
