@@ -3,6 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>ペットボトルラベル分別</title>
+    <style>
+        /* カラーボックスのスタイル */
+        .color-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #000;
+            vertical-align: middle;
+        }
+        /* JSON表示のスタイル */
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+        }
+        /* JSONキーのスタイル */
+        .json-key {
+            color: brown;
+        }
+        /* JSON文字列のスタイル */
+        .json-string {
+            color: olive;
+        }
+        /* JSONブール値のスタイル */
+        .json-boolean {
+            color: blue;
+        }
+        /* 結果表示のスタイル */
+        .result-item {
+            margin-bottom: 10px;
+        }
+        .color-item {
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>ペットボトルラベル分別アプリ</h1>
@@ -10,13 +47,11 @@
     <button id="snap">写真を撮る</button>
     <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
     <div id="result"></div>
-
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const snap = document.getElementById('snap');
         const result = document.getElementById('result');
-
         // カメラを起動
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
@@ -25,19 +60,16 @@
             .catch(err => {
                 console.error("カメラの起動に失敗しました: ", err);
             });
-
         snap.addEventListener('click', () => {
             // カメラから画像をキャプチャ
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
             // canvasからJPEG形式で圧縮し，Base64エンコード
             canvas.toBlob((blob) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(blob);
                 reader.onloadend = () => {
                     const base64Image = reader.result.split(',')[1];
-
                     // BEに送信
                     fetch('/process_image', {
                         method: 'POST',
@@ -54,7 +86,7 @@
                     })
                     .then(data => {
                         // JSON結果を出力
-                        result.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        displayResult(data);
                     })
                     .catch(error => {
                         console.error('エラー:', error);
@@ -63,6 +95,41 @@
                 };
             }, 'image/jpeg', 0.7); // 圧縮率0.7
         });
+        // JSONをハイライトして表示する関数
+        function syntaxHighlight(json) {
+            if (typeof json != 'string') {
+                json = JSON.stringify(json, undefined, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?=:))|("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")|(\b(true|false)\b)/g, function (match) {
+                let cls = 'json-key';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                }
+                return `<span class="${cls}">${match}</span>`;
+            });
+        }
+        // 結果を表示する関数
+        function displayResult(data) {
+            if (data.error) {
+                result.innerHTML = `<p style="color: red;">エラー: ${data.error}</p>`;
+                return;
+            }
+            // JSONをハイライト
+            let highlightedJson = syntaxHighlight(data);
+            // カラーコード部分を置換して色付きボックスを追加
+            highlightedJson = highlightedJson.replace(/"#([0-9A-Fa-f]{6})"/g, (match, p1) => {
+                return `"${p1}" <span class="color-box" style="background-color: #${p1};"></span>`;
+            });
+            // 結果を表示
+            result.innerHTML = `<pre>${highlightedJson}</pre>`;
+        }
     </script>
 </body>
 </html>
