@@ -4,60 +4,56 @@ import { auth, db, provider } from "../../firebase";
 import { Context } from "../../providers/Provider";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import LoginBackground from "./LoginBackground";
+import LoginFrame from "./LoginFrame";
+import styles from "../../css/login/Login.module.css";
 
 const Login = () => {
   const { setUserID } = useContext(Context);
   const navigate = useNavigate();
 
+  // Googleでログインする関数
   const loginInWithGoogle = async () => {
-    signInWithPopup(auth, provider);
-    const user = auth.currentUser;
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      if (user) {
+        setUserID(user.uid);
+        localStorage.setItem("userID", user.uid);
 
-    // グローバル変数を変更
-    if (user) {
-      setUserID(user.uid);
-      localStorage.setItem("userID", user.uid);
+        const userDocRef = doc(db, "user", user.uid);
+        const docSnap = await getDoc(userDocRef);
 
-      const userDocRef = doc(db, "user", user.uid);
-      const docSnap = await getDoc(userDocRef);
-      if (!docSnap.exists()) {
-        await setDoc(doc(db, "user", user.uid), {
-          selectedCharacter: "tea_1",
-          bottoleSum: 0,
-          characters:{
-            tea_1: {
-              intimacyLevel: 0,
+        if (!docSnap.exists()) {
+          await setDoc(userDocRef, {
+            selectedCharacter: "tea_1",
+            bottleSum: 0,
+            characters: {
+              tea_1: { intimacyLevel: 0 },
+              water: { intimacyLevel: 0 },
+              tea_2: { intimacyLevel: 0 },
+              coffee: { intimacyLevel: 0 },
+              juice: { intimacyLevel: 0 },
+              sportsDrinks: { intimacyLevel: 0 },
+              probioticDrinks: { intimacyLevel: 0 },
             },
-            water: {
-              intimacyLevel: 0,
-            },
-            tea_2: {
-              intimacyLevel: 0,
-            },
-            coffee: {
-              intimacyLevel: 0,
-            },
-            juice: {
-              intimacyLevel: 0,
-            },
-            sportsDrinks: {
-              intimacyLevel: 0,
-            },
-            probioticDrinks: {
-              intimacyLevel: 0,
-            },
-          }
-        });
-        navigate("/");
-      } else {
+          });
+        }
         navigate("/");
       }
+    } catch (error) {
+      console.error("Login error: ", error);
     }
   };
 
   return (
-    <div>
-      <button onClick={loginInWithGoogle}>Googleアカウントでログイン</button>
+    <div className="container">
+      <div className={styles.label}>
+        <h1>Labely</h1>
+        {/* <p>ラベル×妖精</p> */}
+      </div>
+      <LoginBackground />
+      <LoginFrame onLogin={loginInWithGoogle} />
     </div>
   );
 };
