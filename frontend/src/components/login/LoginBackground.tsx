@@ -1,42 +1,38 @@
-import React, { useEffect } from 'react';
+import { Canvas } from "@react-three/fiber";
+import { ContactShadows, Environment, Stars } from "@react-three/drei";
+import styles from "../../css/utils/background.module.css";
 
-const applyStyles = () => {
-  const styleElement = document.createElement('style');
-  styleElement.textContent = `
-    .login-background {
-        width: 100%;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        overflow: hidden;
-    }
-
-    /* 白い枠線を作成する::after疑似要素 */
-    .login-background::after {
-        content: '';
-        position: absolute;
-        top: 2%;
-        left: 2%;
-        width: 96%;
-        height: 96%;
-        border: 2px solid white;
-        box-sizing: border-box;
-        pointer-events: none;
-        border-radius: 15px; /* 角を丸く */
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* 枠線のぼかし */
-    }
-  `;
-  document.head.appendChild(styleElement);
-};
-
-const LoginBackground: React.FC = () => {
-  useEffect(() => {
-    applyStyles();
-  }, []);
-
-  return <div className="login-background"></div>;
+const LoginBackground = () => {
+  return (
+    <div className={styles.container}>
+      <Canvas
+        camera={{ position: [0, 0, 2], fov: 70 }}
+        shadows={true}
+        style={{
+          backgroundImage:
+            "linear-gradient(180deg, rgba(23, 28, 86, 1), rgba(95, 135, 250, 1))",
+        }}
+      >
+        <Environment preset="sunset" background={false} />
+        <ContactShadows
+          position={[0, -1.5, 0]}
+          opacity={0.5}
+          scale={10}
+          blur={2.5}
+          far={4.5}
+        />
+        <Stars
+          radius={10}
+          depth={100}
+          count={2000}
+          factor={10}
+          saturation={-1}
+          fade
+          speed={1}
+        />
+      </Canvas>
+    </div>
+  );
 };
 
 export default LoginBackground;
