@@ -1,17 +1,16 @@
 /* Log.module.css */
 
-.container {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background-image: url('/log/log_background.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.viewer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 16px;
+  margin-top: 178px; /* Header の高さに合わせる */
+  margin-bottom: 56px; /* Navbar の高さに合わせる */
 }
 
-.viewer {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.titleImage {
+  width: calc((100% - 64px) / 3); /* 3列に分割 */
+  margin-bottom: 16px;
+  object-fit: cover;
 }
