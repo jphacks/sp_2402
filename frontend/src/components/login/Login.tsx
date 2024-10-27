@@ -1,5 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { auth, db, provider } from "../../firebase";
 import { Context } from "../../providers/Provider";
 import { doc, getDoc, setDoc } from "firebase/firestore";

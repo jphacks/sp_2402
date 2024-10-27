@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../css/log/Kinds.module.css';
+import styles from '../../css/log/kinds.module.css';
 
 const Kinds: React.FC = () => {
   return (

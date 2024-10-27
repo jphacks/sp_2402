@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Camera from "./components/camera/Camera";
 import Home from "./components/home/Home";
