@@ -54,7 +54,7 @@ def compress_image(image: Image) -> bytes:
     max_size = (500, 500)
     image.thumbnail(max_size)
     buffered = BytesIO()
-    image.save(buffered, format="PNG")
+    image.save(buffered, format='PNG')
     return buffered.getvalue()
 
 @app.post("/process_image")
@@ -72,7 +72,7 @@ async def process_image(request: ImageRequest):
 
         # 圧縮した画像を再度Base64エンコード
         buffered = BytesIO()
-        compressed_image.save(buffered, format="PNG")
+        compressed_image.save(buffered, format='JPEG', quality=85, optimize=True, progressive=True)
         img_str = base64.b64encode(buffered.getvalue()).decode()
 
         # ジャンルのリストを取得
