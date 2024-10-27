@@ -54,7 +54,7 @@ def compress_image(image: Image) -> bytes:
     max_size = (500, 500)
     image.thumbnail(max_size)
     buffered = BytesIO()
-    image.save(buffered, format='PNG')
+    image.save(buffered, format='JPEG', quality=85, optimize=True, progressive=True)
     return buffered.getvalue()
 
 @app.post("/process_image")
@@ -68,12 +68,9 @@ async def process_image(request: ImageRequest):
 
         # 画像を圧縮（オプション）
         compressed_image_bytes = compress_image(image)
-        compressed_image = Image.open(BytesIO(compressed_image_bytes))
 
-        # 圧縮した画像を再度Base64エンコード
-        buffered = BytesIO()
-        compressed_image.save(buffered, format='JPEG', quality=85, optimize=True, progressive=True)
-        img_str = base64.b64encode(buffered.getvalue()).decode()
+        # 圧縮した画像をBase64エンコード
+        img_str = base64.b64encode(compressed_image_bytes).decode()
 
         # ジャンルのリストを取得
         genres = '、'.join(config.DRINK_GENRES)
