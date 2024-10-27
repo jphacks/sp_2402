@@ -9,7 +9,7 @@ interface BottleProps {
 const Intimacy: React.FC<BottleProps> = ({ number }) => {
     return (
         <div className={styles.button}>
-            <img src="/utils/PlasticBottle/con.svg" alt="ペットボトル" />
+            <img src="/utils/PlasticBottle/concon.svg" alt="ペットボトル" />
             <p>{`${number}本`}</p> {/* 〇本の形式で表示 */}
         </div>
     );
