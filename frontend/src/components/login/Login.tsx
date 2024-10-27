@@ -48,7 +48,10 @@ const Login = () => {
 
   return (
     <div className="container">
-      <h1 className={styles.label}>Labely</h1>
+      <div className={styles.label}>
+        <h1>Labely</h1>
+        {/* <p>ラベル×妖精</p> */}
+      </div>
       <LoginBackground />
       <LoginFrame onLogin={loginInWithGoogle} />
     </div>

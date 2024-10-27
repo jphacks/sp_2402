@@ -3,10 +3,17 @@
     position: fixed;
     font-size: 60px;
     font-weight: bold;
-    color: #000000; /* 色を黒に変更 */
-    font-family: "Pacifico", cursive; /* 可愛らしいフォント */
+    color: #fff; /* 色を黒に変更 */
+    /* font-family: "Pacifico", cursive; 可愛らしいフォント */
     top: 30%; /* 中央から少し上に配置 */
     left: 50%;
     transform: translate(-50%, -50%); /* 完全に中央に配置 */
+  }
+
+  .label p {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
   }
   

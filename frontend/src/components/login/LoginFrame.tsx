@@ -8,7 +8,7 @@ type LoginFrameProps = {
 const LoginFrame: React.FC<LoginFrameProps> = ({ onLogin }) => {
   return (
     <div className={styles["login-frame"]}> {/* CSSモジュールを適用 */}
-      <button onClick={onLogin}>Login with Google</button>
+      <button onClick={onLogin}>Googleアカウントで<br />ログインする</button>
     </div>
   );
 };
