@@ -4,7 +4,6 @@ Command: npx gltfjsx@6.5.2 tea_1.glb --types
 */
 
 import * as THREE from "three";
-import React from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { GroupProps } from "@react-three/fiber";
@@ -246,7 +245,6 @@ type GLTFResult = GLTF & {
     ["Material.002"]: THREE.MeshStandardMaterial;
     Material: THREE.MeshStandardMaterial;
   };
-  animations: GLTFAction[];
 };
 
 interface ModelProps extends GroupProps {

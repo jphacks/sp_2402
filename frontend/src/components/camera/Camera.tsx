@@ -1,13 +1,8 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import cameras from "../../css/camera/camera.module.css";
 import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
-import { characters } from "../../data/storyData";
-
-interface ScenarioState {
-  character: string;
-}
 
 const Camera = () => {
   const webcamRef = useRef<Webcam>(null);
@@ -69,19 +64,25 @@ const Camera = () => {
     console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
 
     try {
-      const response = await fetch("http://localhost:8000/process_image", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
-      });
+      // const response = await fetch("http://localhost:8000/process_image", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
+      // });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      // if (!response.ok) {
+      //   throw new Error("Network response was not ok");
+      // }
+
+      // const data = await response.json();
+      const data = {
+        separated: true,
+        genre: "コーヒー",
+        colors: ["#a4b814", "#bcdcc8"],
       }
 
-      const data = await response.json();
       console.log(data);
       if (data.separated) {
         // setResult(
