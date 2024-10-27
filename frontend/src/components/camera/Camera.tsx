@@ -3,6 +3,7 @@ import Webcam from "react-webcam";
 import cameras from "../../css/camera/camera.module.css";
 import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
+import { characters } from "../../data/storyData";
 
 interface ScenarioState {
   character: string;
@@ -11,7 +12,6 @@ interface ScenarioState {
 const Camera = () => {
   const webcamRef = useRef<Webcam>(null);
   const [image, setImage] = useState<string | null>(null);
-  const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -51,50 +51,62 @@ const Camera = () => {
     });
   };
 
+  const convertColors = (colors: string[]) => {
+    return colors.map((color) => {
+      // 色コードが「#RRGGBB」の形式であることを想定
+      if (color.length === 7) {
+        return `#${color[1]}${color[3]}${color[5]}`; // #F53 と #C03 に変換
+      }
+      return color; // もし短縮形にできない場合はそのまま返す
+    });
+  };
+
   // APIに画像を送信する関数
   const sendImageToAPI = async () => {
     if (!image) return;
 
     const compressedImage = await compressImage(image, 0.7); // 圧縮率を指定
-    // console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
+    console.log(compressedImage.split(",")[1]); // 圧縮後の画像をログに表示
 
-    // try {
-    //   const response = await fetch("http://localhost:8000/process_image", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
-    //   });
+    try {
+      const response = await fetch("http://localhost:8000/process_image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ image: compressedImage.split(",")[1] }), // 送信するデータ
+      });
 
-    //   if (!response.ok) {
-    //     throw new Error("Network response was not ok");
-    //   }
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
 
-    //   const data = await response.json();
-    //   console.log(data);
-    //   if (data.separated) {
-    //     setResult(
-    //       `ラベルが分離されています。ジャンル: ${
-    //         data.genre
-    //       }、イメージカラー: ${data.colors.join(", ")}`
-    //     );
-    //   } else {
-    //     setResult("ラベルが分離されていません。");
-    //   }
-    // } catch (error) {
-    //   console.error("エラー:", error);
-    //   setResult("エラーが発生しました。");
-    // }
-    const separated = true;
-    if (!separated) {
-      setError(true);
-    } else {
-      const scenarioState: ScenarioState = {
-        character: "coffee",
-      };
+      const data = await response.json();
+      console.log(data);
+      if (data.separated) {
+        // setResult(
+        //   `ラベルが分離されています。ジャンル: ${
+        //     data.genre
+        //   }、イメージカラー: ${data.colors.join(", ")}`
+        // );
+        let character = "tea_1";
+        if (data.genre == "水") character = "water";
+        else if (data.genre == "お茶") character = "tea_1";
+        else if (data.genre == "紅茶") character = "tea_2";
+        else if (data.genre == "コーヒー") character = "coffee";
+        else if (data.genre == "ジュース") character = "juice";
+        else if (data.genre == "スポーツドリンク") character = "sportsDrinks";
+        else character == "probioticDrinks";
 
-      navigate("/scenario", { state: scenarioState });
+        const convertedColors = convertColors(data.colors);
+        navigate("/scenario", {
+          state: { character, colors: convertedColors },
+        });
+      } else {
+        setError(true);
+      }
+    } catch (error) {
+      console.error("エラー:", error);
     }
   };
 
@@ -159,7 +171,6 @@ const Camera = () => {
         </>
       )}
       {error && <Popup closePopup={closePopup} />}
-      {result && <p>{result}</p>}
     </>
   );
 };

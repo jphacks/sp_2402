@@ -8,7 +8,7 @@ import ViewCoffee from "../utils/ViewCoffee";
 import ViewTea_1 from "../utils/ViewTea_1";
 import { Context } from "../../providers/Provider";
 import { characters, initData, UserData } from "../../data/storyData";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, increment, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const Scenario = () => {
@@ -29,6 +29,7 @@ const Scenario = () => {
 
   useEffect(() => {
     console.log("ユーザーデータを取得");
+    console.log(location.state.colors)
     const fetchData = async () => {
       // ログインしていなかったらログイン画面へ
       if (!localStorage.getItem("userID")) {
@@ -49,6 +50,7 @@ const Scenario = () => {
           updateDoc(userDocRef, {
             [`characters.${location.state.character}.intimacyLevel`]:
               data.characters[location.state.character].intimacyLevel + 20,
+            bottleSum: increment(1),
           });
         } else {
           console.log("ユーザーデータが見つかりません");
@@ -64,7 +66,7 @@ const Scenario = () => {
   switch (location.state.character) {
     case "tea_1":
       // characterComponent = <ViewTea_1 enviroment="park" />;
-      characterComponent = <ViewTea_1 enviroment={enviroment} />;
+      characterComponent = <ViewTea_1 enviroment={enviroment} colors={location.state.colors}/>;
       break;
     case "coffee":
       characterComponent = <ViewCoffee enviroment={enviroment} />;
