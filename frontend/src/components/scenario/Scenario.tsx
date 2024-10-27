@@ -46,11 +46,14 @@ const Scenario = () => {
           setIntimacyLevel(
             data.characters[location.state.character].intimacyLevel
           );
-
+          const plus =
+            data.characters[location.state.character].intimacyLevel >= 100
+              ? 0
+              : 20;
           if (location.state.character) {
             updateDoc(userDocRef, {
               [`characters.${location.state.character}.intimacyLevel`]:
-                data.characters[location.state.character].intimacyLevel + 20,
+                increment(plus),
               bottoleSum: increment(1),
             });
           }

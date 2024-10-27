@@ -4,44 +4,48 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "../../css/log/Log.module.css";
 import Navbar from "../utils/Navbar";
 import Header from "./Header";
-import TitlesCard from "./TitlesCard";
 import Kinds from "./kinds";
 import { Context } from "../../providers/Provider";
 import { useNavigate } from "react-router-dom";
 // import { initData, UserData } from "../../data/storyData";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { characters, initData, UserData } from "../../data/storyData";
 
-const dummyData = [
-  { image: "/log/eco1.svg", isUnlocked: true },
-  { image: "/log/eco2.svg", isUnlocked: false },
-  { image: "/log/eco3.svg", isUnlocked: false },
-  { image: "/log/story1.svg", isUnlocked: true },
-  { image: "/log/story2.svg", isUnlocked: true },
-  { image: "/log/story3.svg", isUnlocked: false },
-  { image: "/log/character1.svg", isUnlocked: true },
-  { image: "/log/character2.svg", isUnlocked: false },
-  { image: "/log/character3.svg", isUnlocked: false },
-];
-
-// 各画像の位置を指定
-const positions = [
-  { left: 12, top: 200 }, // eco1
-  { left: 131, top: 200 }, // eco2
-  { left: 250, top: 200 }, // eco3
-  { left: 12, top: 370 }, // story1
-  { left: 131, top: 370 }, // story2
-  { left: 250, top: 370 }, // story3
-  { left: 12, top: 540 }, // character1
-  { left: 131, top: 540 }, // character2
-  { left: 250, top: 540 }, // character3
+const titleData = [
+  {
+    group: "eco",
+    groupIndex: { image: "/log/eco.svg" },
+    badges: [
+      { image: "/log/eco1.svg", isUnlocked: false, conditions: 1 },
+      { image: "/log/eco2.svg", isUnlocked: false, conditions: 10 },
+      { image: "/log/eco3.svg", isUnlocked: false, conditions: 50 },
+    ],
+  },
+  {
+    group: "story",
+    groupIndex: { image: "/log/story.svg" },
+    badges: [
+      { image: "/log/story1.svg", isUnlocked: false, conditions: 1 },
+      { image: "/log/story2.svg", isUnlocked: false, conditions: 5 },
+      { image: "/log/story3.svg", isUnlocked: false, conditions: 35 },
+    ],
+  },
+  {
+    group: "character",
+    groupIndex: { image: "/log/character.svg" },
+    badges: [
+      { image: "/log/character1.svg", isUnlocked: false, conditions: 1 },
+      { image: "/log/character2.svg", isUnlocked: false, conditions: 3 },
+      { image: "/log/character3.svg", isUnlocked: false, conditions: 7 },
+    ],
+  },
 ];
 
 const Log: React.FC = () => {
   const { userID } = useContext(Context);
   const navigate = useNavigate();
-  // const [setUserData] = useState(initData);
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [userData, setUserData] = useState(initData);
 
   useEffect(() => {
     console.log("ユーザーデータを取得");
@@ -59,17 +63,13 @@ const Log: React.FC = () => {
         if (userDocSnap.exists()) {
           const data = userDocSnap.data();
           // 型チェックとデフォルト値を適用
-          // const formattedData: UserData = {
-          //   selectedCharacter:
-          //     data.selectedCharacter || initData.selectedCharacter,
-          //   bottoleSum: data.bottoleSum || initData.bottoleSum,
-          //   characters: data.characters || initData.characters,
-          // };
-          // setUserData(formattedData);
-
-          if (data.bottoleSum >= 10) {
-            setIsUnlocked(true);
-          }
+          const formattedData: UserData = {
+            selectedCharacter:
+              data.selectedCharacter || initData.selectedCharacter,
+            bottoleSum: data.bottoleSum || initData.bottoleSum,
+            characters: data.characters || initData.characters,
+          };
+          setUserData(formattedData);
         } else {
           console.log("ユーザーデータが見つかりません");
         }
@@ -79,34 +79,44 @@ const Log: React.FC = () => {
     fetchData();
   }, []);
 
+  const updatedTitleData = titleData.map((data) => {
+    let badges;
+    if (data.group == "eco") {
+      badges = data.badges.map((badge) => ({
+        ...badge,
+        isUnlocked: userData.bottoleSum >= badge.conditions,
+      }));
+    } else if (data.group == "character") {
+      badges = data.badges.map((badge) => ({
+        ...badge,
+        isUnlocked:
+          Object.values(userData.characters).filter(
+            (character) => character.intimacyLevel >= 1
+          ).length >= badge.conditions,
+      }));
+    } else {
+      const totalIntimacyLevel = Object.values(userData.characters).reduce(
+        (sum, character) => sum + character.intimacyLevel,
+        0
+      );
+      badges = data.badges.map((badge) => ({
+        ...badge,
+        isUnlocked: totalIntimacyLevel / 20 >= badge.conditions,
+      }));
+    }
+    return {
+      ...data,
+      badges,
+    };
+  });
+
   return (
     <div className={styles.container}>
       <Header />
-      <Kinds />
-      <div className={styles.viewer}>
-        {dummyData.map((data, index) =>
-          index === 1 ? (
-            <TitlesCard
-              key={index}
-              image={data.image}
-              isUnlocked={isUnlocked}
-              style={{
-                left: `${positions[index].left}px`,
-                top: `${positions[index].top}px`,
-              }}
-            />
-          ) : (
-            <TitlesCard
-              key={index}
-              image={data.image}
-              isUnlocked={data.isUnlocked}
-              style={{
-                left: `${positions[index].left}px`,
-                top: `${positions[index].top}px`,
-              }}
-            />
-          )
-        )}
+      <div className={styles.badgesContainer}>
+        {updatedTitleData.map((data) => (
+          <Kinds indexImage={data.groupIndex.image} titleCards={data.badges} />
+        ))}
       </div>
       <Navbar currentPage="log" />
     </div>

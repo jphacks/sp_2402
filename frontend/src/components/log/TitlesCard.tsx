@@ -7,12 +7,11 @@ import Lock from './Lock';
 interface TitlesCardProps {
   image: string;
   isUnlocked: boolean;
-  style: React.CSSProperties;
 }
 
-const TitlesCard: React.FC<TitlesCardProps> = ({ image, isUnlocked, style }) => {
+const TitlesCard: React.FC<TitlesCardProps> = ({ image, isUnlocked }) => {
   return (
-    <div className={styles.TitlesCardContainer} style={style}>
+    <div className={styles.TitlesCardContainer}>
       {isUnlocked ? (
         <img src={image} alt="称号画像" className={styles.image} />
       ) : (
