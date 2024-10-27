@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ペットボトルラベル分別</title>
+</head>
+<body>
+    <h1>ペットボトルラベル分別アプリ</h1>
+    <video id="video" width="400" height="300" autoplay></video>
+    <button id="snap">写真を撮る</button>
+    <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+    <div id="result"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+        const result = document.getElementById('result');
+
+        // カメラを起動
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("カメラの起動に失敗しました: ", err);
+            });
+
+        snap.addEventListener('click', () => {
+            // カメラから画像をキャプチャ
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // canvasからJPEG形式で圧縮し，Base64エンコード
+            canvas.toBlob((blob) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => {
+                    const base64Image = reader.result.split(',')[1];
+
+                    // BEに送信
+                    fetch('/process_image', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ image: base64Image }),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // JSON結果を出力
+                        result.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                    })
+                    .catch(error => {
+                        console.error('エラー:', error);
+                        result.innerHTML = `<p>エラーが発生しました: ${error.message}</p>`;
+                    });
+                };
+            }, 'image/jpeg', 0.7); // 圧縮率0.7
+        });
+    </script>
+</body>
+</html>
