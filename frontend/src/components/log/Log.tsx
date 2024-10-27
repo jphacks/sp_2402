@@ -2,7 +2,6 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import styles from "../../css/log/Log.module.css";
-//import LogBackground from "./LogBackground";
 import Navbar from "../utils/Navbar";
 import Header from "./Header";
 import TitlesCard from "./TitlesCard";
