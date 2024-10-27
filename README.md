@@ -35,8 +35,6 @@
 3Dモデルの妖精「ラベリィ」が、ペットボトルから取り外したラベルをカメラで撮影することで召喚され、個性豊かに登場します。愛らしいキャラクター達が、リサイクル行動に楽しさと達成感をプラスし、ラベル分別を自然と日常化させます。
 
 #### 3. OpenAIを活用したラベル認識
-[デモ動画 1](https://drive.google.com/file/d/1ok5oFG_6J76JnDr6PaJpbG7e0eK_0WT-/view?usp=sharing)
-[デモ動画 2](https://drive.google.com/file/d/1KQwsOAClFjpchRC1QuNWf_HfvjRCj6k-/view?usp=sharing)
 最新のAI技術であるOpenAIのAPIを活用し、ラベル認識と分別判定、色抽出を実現しています。ユーザーがラベルを撮影するとAIがラベルの色を抽出し、その色が反映したキャラクターが召喚されます。これにより、ユーザーは飽きずにラベル撮影・キャラクター召喚を楽しむことができ、リサイクル行動への意欲も高まります。
 
 ### 解決できること
@@ -111,6 +109,8 @@ OpenAIへ画像を送信する方法の研究を行うことで、ラベルの�
 ##### 実装済
 - **画像認識API**
 OpenAI gpt-4o Tier 3を用いて、ラベル写真からラベルが剥がれているか判定し、ジャンルの分類と色の抽出を行います。
+  - [デモ動画 1](https://drive.google.com/file/d/1ok5oFG_6J76JnDr6PaJpbG7e0eK_0WT-/view?usp=sharing)
+  - [デモ動画 2](https://drive.google.com/file/d/1KQwsOAClFjpchRC1QuNWf_HfvjRCj6k-/view?usp=sharing)
 - **3Dモデルの色変更**
 gltfjsxを使用し、モデルの特定のメッシュの色を変更します。「お茶」に対応するモデルにのみ実装済。
 
