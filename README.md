@@ -44,18 +44,23 @@ SDGsの目標である12番「つくる責任 つかう責任」や14番「海�
 - OpenAI gpt-4o Tier 3
 
 #### フレームワーク・ライブラリ・モジュール
-- Python
-- HTML
-- fastAPI
-- OpenAI
-- Blender
-- React
-- Vite
-- TypeScript
-- CSS Modules
-- Figma
-- Docker
-- Firebase
+- **フレームワーク**
+  - React
+  - fastAPI
+  - Firebase
+
+- **ライブラリ**
+  - Python
+  - Docker
+  - Vite
+  - TypeScript
+  - OpenAI
+  - Blender
+
+- **モジュール**
+  - HTML
+  - CSS Modules
+  - Figma
 
 ## デバイス
 - Android
