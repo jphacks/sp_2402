@@ -38,7 +38,3 @@ PROMPT_TEMPLATE = """
   "colors": ["#RRGGBB", "#RRGGBB"]
 }}
 """
-
-def format_prompt(image_data: str):
-    genres_list = "\n".join([f"{i+1}. {genre}" for i, genre in enumerate(DRINK_GENRES)])
-    return PROMPT_TEMPLATE.format(image=image_data, genres=genres_list)
