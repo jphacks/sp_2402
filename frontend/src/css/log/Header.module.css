@@ -1,8 +1,6 @@
 .button {
     position: fixed;
     top: 88px;
-    left: 80px;
-    transform: translateX(-50%);
     z-index: 1;
   }
   

@@ -1,4 +1,3 @@
-// Log.tsx
 
 import React, { useContext, useEffect, useState } from "react";
 import styles from "../../css/log/Log.module.css";

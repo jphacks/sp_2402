@@ -64,10 +64,10 @@ button:focus-visible {
 } */
 
 html, body {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 0;
   width: 100%;
-  max-width: 500px;
+  /* max-width: 500px; */
   height: 100%;
   font-family: "Inter", "Noto Sans JP", sans-serif;
 }
