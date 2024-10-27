@@ -56,6 +56,10 @@ SDGsの目標である12番「つくる責任 つかう責任」や14番「海�
   - TypeScript
   - OpenAI
   - Blender
+  - uvicorn
+  - SQLalchemy
+  - psycopg2-binary
+  - alembic
 
 - **モジュール**
   - HTML
