@@ -16,14 +16,13 @@ app = FastAPI()
 # CORSの設定
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 必要に応じて許可するオリジンを指定
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # 静的ファイルの提供設定
-# プロジェクトルートにある'static'ディレクトリを指定
 app.mount("/static", StaticFiles(directory="static", html=True), name="static")
 
 @app.post("/posttest")
@@ -33,7 +32,7 @@ async def ap():
     except Exception as e:
         return {"error": str(e)}
 
-# 環境変数が読み込めるかテスト用
+# 環境変数が読み込めるかテスト
 @app.get("/envtest")
 async def envtest():
     try:
@@ -53,6 +52,11 @@ class ImageRequest(BaseModel):
 def compress_image(image: Image) -> bytes:
     max_size = (500, 500)
     image.thumbnail(max_size)
+    
+    # 画像がRGBAモードの場合、RGBに変換
+    if image.mode == 'RGBA':
+        image = image.convert('RGB')
+        
     buffered = BytesIO()
     image.save(buffered, format='JPEG', quality=85, optimize=True, progressive=True)
     return buffered.getvalue()
@@ -66,7 +70,7 @@ async def process_image(request: ImageRequest):
         # PILで画像を開く
         image = Image.open(BytesIO(image_data))
 
-        # 画像を圧縮（オプション）
+        # 画像を圧縮
         compressed_image_bytes = compress_image(image)
 
         # 圧縮した画像をBase64エンコード
@@ -78,7 +82,7 @@ async def process_image(request: ImageRequest):
 
         # OpenAIにプロンプトを送信
         response = openai.chat.completions.create(
-            model="gpt-4o",  # 使用するモデルを指定
+            model="gpt-4o",
             messages=[
                 {
                     "role": "system", "content": "あなたは画像を解析するAIアシスタントです。"
@@ -96,7 +100,7 @@ async def process_image(request: ImageRequest):
                     ]
                 }
             ],
-            temperature=0.5,
+            temperature=0.4,
         )
 
         # レスポンスから内容を取得
