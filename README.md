@@ -58,6 +58,11 @@ SDGsの目標である12番「つくる責任 つかう責任」や14番「海�
 - Firebase
 
 ## デバイス
+- Android
+- IOS
+- Windows 10/11
+- Mac
+- Linux
 
 ### 独自技術
 
