@@ -133,7 +133,6 @@ const coffeeStory: Episode[] = [
 ];
 
 interface CharacterInfo {
-  intimacyLevel: number;
   name: string;
   scenario: Episode[];
   isSelected: boolean;
@@ -141,57 +140,100 @@ interface CharacterInfo {
 
 export const characters: Record<string, CharacterInfo> = {
   tea_1: {
-    intimacyLevel: 20,
     name: "茶々",
     scenario: tea_1Story,
     isSelected: true,
   },
   water: {
-    intimacyLevel: 0,
     name: "ミネラルウォーター",
     scenario: tea_1Story,
     isSelected: false,
   },
   tea_2: {
-    intimacyLevel: 0,
     name: "紅茶",
     scenario: tea_1Story,
     isSelected: false,
   },
   coffee: {
-    intimacyLevel: 40,
     name: "カフェラ",
     scenario: coffeeStory,
     isSelected: false,
   },
   juice: {
-    intimacyLevel: 0,
     name: "フルーツジュース",
     scenario: tea_1Story,
     isSelected: false,
   },
-  "sports drinks": {
-    intimacyLevel: 0,
+  sportDrinks: {
     name: "スポーツドリンク",
     scenario: tea_1Story,
     isSelected: false,
   },
-  "probiotic drinks": {
-    intimacyLevel: 0,
+  probioticDrinks: {
     name: "プロバイオティクス飲料",
     scenario: tea_1Story,
     isSelected: false,
   },
 };
 
-interface User {
-  selectedCharacter: string;
-  bottoleSum: number;
-  characters: Record<string, CharacterInfo>;
+interface CharacterData {
+  intimacyLevel: number;
 }
 
-export const dummyUser:User =  {
+export interface UserData {
+  selectedCharacter: string,
+  bottoleSum: number,
+  characters: Record<string, CharacterData>;
+}
+
+export const initData: UserData = {
   selectedCharacter: "tea_1",
-  bottoleSum: 20,
-  characters: characters,
+  bottoleSum: 0,
+  characters:{
+    tea_1: {
+      intimacyLevel: 0,
+    },
+    water: {
+      intimacyLevel: 0,
+    },
+    tea_2: {
+      intimacyLevel: 0,
+    },
+    coffee: {
+      intimacyLevel: 0,
+    },
+    juice: {
+      intimacyLevel: 0,
+    },
+    sportsDrinks: {
+      intimacyLevel: 0,
+    },
+    probioticDrinks: {
+      intimacyLevel: 0,
+    },
+  }
+}
+
+export const characterData: Record<string, CharacterData> = {
+  tea_1: {
+    intimacyLevel: 0,
+  },
+  water: {
+    intimacyLevel: 0,
+  },
+  tea_2: {
+    intimacyLevel: 0,
+  },
+  coffee: {
+    intimacyLevel: 0,
+  },
+  juice: {
+    intimacyLevel: 0,
+  },
+  sportsDrinks: {
+    intimacyLevel: 0,
+  },
+  probioticDrinks: {
+    intimacyLevel: 0,
+  },
 }

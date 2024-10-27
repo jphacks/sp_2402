@@ -91,7 +91,7 @@ const Camera = () => {
       setError(true);
     } else {
       const scenarioState: ScenarioState = {
-        character: "tea_1",
+        character: "coffee",
       };
 
       navigate("/scenario", { state: scenarioState });
