@@ -18,9 +18,10 @@ interface ViewProps {
     | "sunset"
     | "warehouse"
     | undefined;
+  colors?: string[];
 }
 
-const ViewTea_1: React.FC<ViewProps> = ({ enviroment }) => {
+const ViewTea_1: React.FC<ViewProps> = ({ enviroment, colors }) => {
   return (
     <div className={styles.container}>
       {enviroment == undefined ? (
@@ -38,7 +39,11 @@ const ViewTea_1: React.FC<ViewProps> = ({ enviroment }) => {
               floatIntensity={1} // 上下の Float の強度。デフォルトでは1
               floatingRange={[-0.1, 0.1]} // オブジェクトが浮動する Y 軸値の範囲。デフォルトは [-0.1,0.1]
             >
-              <Model position={[0, 0, -3]} rotation={[0, Math.PI / 2, 0]} />
+              <Model
+                position={[0, 0, -3]}
+                rotation={[0, Math.PI / 2, 0]}
+                colors={colors}
+              />
               <Environment preset="sunset" background={false} />
               <ContactShadows
                 position={[0, -1.5, 0]}
@@ -67,7 +72,11 @@ const ViewTea_1: React.FC<ViewProps> = ({ enviroment }) => {
             floatIntensity={1} // 上下の Float の強度。デフォルトでは1
             floatingRange={[-0.1, 0.1]} // オブジェクトが浮動する Y 軸値の範囲。デフォルトは [-0.1,0.1]
           >
-            <Model position={[0, 0, -3]} rotation={[0, Math.PI / 2, 0]} />
+            <Model
+              position={[0, 0, -3]}
+              rotation={[0, Math.PI / 2, 0]}
+              colors={colors}
+            />
             <Environment
               preset={enviroment}
               background
