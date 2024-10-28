@@ -121,10 +121,14 @@ async def process_image(request: ImageRequest):
         genre = result.get('genre')
         colors = result.get('colors', [])[:2]  # 2色
 
+        # OpenAIからのレスポンス全てが入ったオブジェクト
+        response_dict = response.to_dict()
+
         return {
             "separated": separated,
             "genre": genre,
-            "colors": colors
+            "colors": colors,
+            "responseAll": response_dict
         }
     except json.JSONDecodeError:
         return {"error": "OpenAIからの応答をJSON形式で解析できませんでした。"}
