@@ -50,7 +50,7 @@ class ImageRequest(BaseModel):
 
 # 画像を圧縮
 def compress_image(image: Image) -> bytes:
-    max_size = (500, 500)
+    max_size = (512, 512)
     image.thumbnail(max_size)
     
     # 画像がRGBAモードの場合、RGBに変換
